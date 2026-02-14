@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المقال - Harage</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="shortcut icon" href="logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-light: #ffffff;
+            --bg-dark: #000000;
+            --text-light: #000000;
+            --text-dark: #ffffff;
+            --border-light: #e5e5e5;
+            --border-dark: #333333;
+            --hover-light: #f5f5f5;
+            --hover-dark: #1a1a1a;
+        }
+
+        html.dark {
+            --bg-light: #000000;
+            --bg-dark: #000000;
+            --text-light: #ffffff;
+            --text-dark: #ffffff;
+            --border-light: #333333;
+            --border-dark: #555555;
+            --hover-light: #1a1a1a;
+            --hover-dark: #2a2a2a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-light);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* HEADER */
+        header {
+            background: var(--bg-light);
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            transition: all 0.3s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.02);
+        }
+
+        .logo-img {
+            height: 44px;
+            width: auto;
+            border-radius: 6px;
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-light);
+            letter-spacing: -0.5px;
+        }
+
+        nav {
+            display: flex;
+            gap: 2.5rem;
+            flex: 1;
+            justify-content: center;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.2s;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--text-light);
+            transition: width 0.2s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        select, button {
+            padding: 0.5rem 0.8rem;
+            border: 1px solid var(--border-light);
+            background: var(--bg-light);
+            color: var(--text-light);
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        select:hover, button:hover {
+            background: var(--hover-light);
+            border-color: #d0d0d0;
+        }
+
+        select:focus, button:focus {
+            outline: none;
+            border-color: var(--text-light);
+            background: var(--hover-light);
+        }
+
+        /* MAIN CONTENT */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            min-height: calc(100vh - 300px);
+        }
+
+        /* SECTION HEADER */
+        .section-header {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            margin-top: 3.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-light);
+            letter-spacing: -0.3px;
+        }
+
+        html.dark .section-header {
+            border-bottom-color: var(--border-dark);
+        }
+
+        .article-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-light);
+            font-size: 0.95rem;
+            color: #666;
+            flex-wrap: wrap;
+        }
+
+        html.dark .article-meta {
+            color: #999;
+        }
+
+        .article-image {
+            width: 100%;
+            max-height: 450px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 2.5rem 0;
+        }
+
+        .article-content {
+            line-height: 1.85;
+            font-size: 1.05rem;
+            color: #333;
+        }
+
+        html.dark .article-content {
+            color: #ccc;
+        }
+
+        .article-content p {
+            margin-bottom: 1.8rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1.2rem;
+            letter-spacing: -0.3px;
+        }
+
+        .article-content h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+        }
+
+        .article-content ul, .article-content ol {
+            margin: 1.8rem 0;
+            padding-right: 2rem;
+        }
+
+        .article-content li {
+            margin-bottom: 1rem;
+        }
+
+        .article-source {
+            background: var(--hover-light);
+            padding: 2rem;
+            border-left: 4px solid var(--text-light);
+            margin: 2.5rem 0;
+            border-radius: 6px;
+        }
+
+        .article-source-label {
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+
+        .article-source-link {
+            color: inherit;
+            word-break: break-all;
+            font-size: 0.9rem;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 3rem;
+            padding: 1rem 2rem;
+            border: 1px solid #ccc;
+            background: var(--bg-light);
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.3px;
+        }
+
+        .back-button:hover {
+            background: var(--hover-light);
+            border-color: #999;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--bg-light);
+            border-top: 1px solid var(--border-light);
+            padding: 3rem 1.5rem;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 3rem;
+        }
+
+        html.dark footer {
+            background: var(--bg-dark);
+            border-color: var(--border-dark);
+            color: #999;
+        }
+
+        footer p {
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .logo-container {
+                flex: 1 1 auto;
+            }
+
+            .logo-img {
+                height: 36px;
+            }
+
+            .logo-text {
+                font-size: 1.2rem;
+            }
+
+            nav {
+                flex-basis: 100%;
+                gap: 1.5rem;
+                order: 3;
+                justify-content: center;
+            }
+
+            .header-controls {
+                flex-basis: 100%;
+                justify-content: center;
+                order: 2;
+            }
+
+            main {
+                padding: 2rem 1rem;
+            }
+
+            .section-header {
+                font-size: 1.3rem;
+                margin-top: 2.5rem;
+            }
+
+            .article-title {
+                font-size: 2rem;
+            }
+
+            .article-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .article-content {
+                font-size: 1rem;
+            }
+
+            .article-content h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text {
+                display: none;
+            }
+
+            nav {
+                gap: 1rem;
+            }
+
+            nav a {
+                font-size: 0.85rem;
+            }
+
+            .section-header {
+                font-size: 1.1rem;
+            }
+
+            .article-title {
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .article-content {
+                font-size: 0.95rem;
+                line-height: 1.7;
+            }
+
+            .article-content h2 {
+                font-size: 1.3rem;
+            }
+
+            .back-button {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo-container">
+                <img src="logo.png" alt="Harage Logo" class="logo-img">
+                <span class="logo-text">Harage</span>
+            </a>
+            <nav id="navMenu">
+                <a href="index.html" data-ar="الرئيسية" data-en="Home" data-fr="Accueil">الرئيسية</a>
+                <a href="articles.html" data-ar="المقالات" data-en="Articles" data-fr="Articles">المقالات</a>
+                <a href="credits.html" data-ar="الفريق" data-en="Team" data-fr="Équipe">الفريق</a>
+            </nav>
+            <div class="header-controls">
+                <select id="langSelect" onchange="changeLanguage(this.value)">
+                    <option value="ar">عربي</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                </select>
+                <button onclick="toggleDarkMode()">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main id="articleContainer">
+        <p>جاري تحميل المقال...</p>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Harage | شراكة بين Leo MH × TA-Mohamed</p>
+    </footer>
+
+    <!-- Firebase Configuration (Shared) -->
+    <script src="js/firebase-config.js"></script>
+
+    <script src="js/data.js" type="module"></script>
+    <script>
+        // DARK MODE
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('harage_dark_mode', isDark);
+            updateDarkModeButton();
+        }
+
+        function updateDarkModeButton() {
+            const btn = document.querySelector('button[onclick*="toggleDark"]');
+            const isDark = document.documentElement.classList.contains('dark');
+            btn.textContent = isDark ? '☀️' : '🌙';
+        }
+
+        // Initialize dark mode
+        function initDarkMode() {
+            const isDark = localStorage.getItem('harage_dark_mode') === 'true';
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+            }
+            updateDarkModeButton();
+        }
+
+        // LANGUAGE
+        function changeLanguage(lang) {
+            localStorage.setItem('harage_language', lang);
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            
+            // Update all elements with data-* attributes
+            document.querySelectorAll('[data-ar][data-en][data-fr]').forEach(element => {
+                const text = element.getAttribute(`data-${lang}`);
+                if (text && element.tagName !== 'IMG') {
+                    if (text.includes('©')) {
+                        element.innerHTML = text;
+                    } else {
+                        element.textContent = text;
+                    }
+                }
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initDarkMode();
+            
+            const lang = localStorage.getItem('harage_language') || 'ar';
+            document.getElementById('langSelect').value = lang;
+            changeLanguage(lang);
+        });
+    </script>
+
+    <script src="js/data.js"></script>
+    <script>
+        async function displayArticle() {
+            const params = new URLSearchParams(window.location.search);
+            const articleId = params.get('id');
+
+            try {
+                if (typeof window.getArticleById !== 'function') {
+                    throw new Error('Firebase not available');
+                }
+
+                const article = await window.getArticleById(articleId);
+
+                if (!article) {
+                    document.getElementById('articleContainer').innerHTML = `
+                        <p>المقال غير موجود</p>
+                        <a href="articles.html" class="back-button">العودة للمقالات</a>
+                    `;
+                    return;
+                }
+
+                const articleDate = article.createdAt.toDate ? article.createdAt.toDate() : article.createdAt;
+                const formattedDate = new Date(articleDate).toLocaleDateString('ar-EG', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+
+                const html = `
+                    <h1 class="article-title">${article.title}</h1>
+                    
+                    <div class="article-meta">
+                        <span><strong>${article.category}</strong></span>
+                        <span>📅 ${formattedDate}</span>
+                    </div>
+
+                    ${article.imageUrl ? `<img src="${article.imageUrl}" alt="" class="article-image" onerror="this.style.display='none'">` : ''}
+
+                    ${article.link ? `
+                        <div class="article-source">
+                            <div class="article-source-label">المصدر:</div>
+                            <a href="${article.link}" target="_blank" rel="noopener noreferrer" class="article-source-link">${article.link}</a>
+                        </div>
+                    ` : ''}
+
+                    <div class="article-content">
+                        <p>${article.description}</p>
+                        ${article.content.split('\n\n').map(p => `<p>${p}</p>`).join('')}
+                    </div>
+
+                    <a href="articles.html" class="back-button">العودة للمقالات</a>
+                `;
+
+                document.getElementById('articleContainer').innerHTML = html;
+            } catch (error) {
+                console.log('Offline mode or Firebase error');
+                document.getElementById('articleContainer').innerHTML = `
+                    <p>لعرض هذا المقال، تأكد من اتصالك بـ HTTP server أو Firebase</p>
+                    <a href="articles.html" class="back-button">العودة للمقالات</a>
+                `;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', displayArticle);
+    </script>
+</body>
+</html>
+

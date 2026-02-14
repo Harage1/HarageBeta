@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harage</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="shortcut icon" href="logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-light: #ffffff;
+            --bg-dark: #000000;
+            --text-light: #000000;
+            --text-dark: #ffffff;
+            --border-light: #e5e5e5;
+            --border-dark: #333333;
+            --hover-light: #f5f5f5;
+            --hover-dark: #1a1a1a;
+        }
+
+        html.dark {
+            --bg-light: #000000;
+            --bg-dark: #000000;
+            --text-light: #ffffff;
+            --text-dark: #ffffff;
+            --border-light: #333333;
+            --border-dark: #555555;
+            --hover-light: #1a1a1a;
+            --hover-dark: #2a2a2a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-light);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-light);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* HEADER */
+        header {
+            background: var(--bg-light);
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            transition: all 0.3s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        /* NEW LOGO STYLES */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.02);
+        }
+
+        .logo-img {
+            height: 44px;
+            width: auto;
+            border-radius: 6px;
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-light);
+            letter-spacing: -0.5px;
+        }
+
+        nav {
+            display: flex;
+            gap: 2.5rem;
+            flex: 1;
+            justify-content: center;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.2s;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--text-light);
+            transition: width 0.2s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        select, button {
+            padding: 0.5rem 0.8rem;
+            border: 1px solid var(--border-light);
+            background: var(--bg-light);
+            color: var(--text-light);
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        select:hover, button:hover {
+            background: var(--hover-light);
+            border-color: #d0d0d0;
+        }
+
+        select:focus, button:focus {
+            outline: none;
+            border-color: var(--text-light);
+            background: var(--hover-light);
+        }
+
+        /* INTRO MODAL */
+        .intro-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .intro-modal.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .intro-content {
+            text-align: center;
+            color: var(--text-light);
+            padding: 2rem;
+            max-width: 700px;
+        }
+
+        .intro-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+
+        .intro-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.7;
+            line-height: 1.6;
+        }
+
+        .intro-partnership {
+            font-size: 1rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.6;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 1.5rem 0;
+        }
+
+        html.dark .intro-partnership {
+            border-top-color: rgba(255, 255, 255, 0.1);
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .intro-button {
+            padding: 1.2rem 3rem;
+            background: var(--text-light);
+            color: var(--bg-light);
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.3px;
+        }
+
+        .intro-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .intro-button:active {
+            transform: translateY(-1px);
+        }
+
+        /* MAIN CONTENT */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            min-height: calc(100vh - 300px);
+        }
+
+        .page-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 3.5rem;
+            text-align: center;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+
+        /* FEATURED ARTICLE */
+        .featured-section {
+            margin-bottom: 5rem;
+        }
+
+        .featured-article {
+            background: var(--bg-light);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: var(--text-light);
+            align-items: stretch;
+        }
+
+        .featured-article:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            border-color: #d0d0d0;
+        }
+
+        html.dark .featured-article {
+            background: var(--bg-dark);
+            border-color: var(--border-dark);
+        }
+
+        html.dark .featured-article:hover {
+            box-shadow: 0 12px 40px rgba(255, 255, 255, 0.1);
+            border-color: #444;
+        }
+
+        .featured-image {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .featured-content {
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .featured-category {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #999;
+            margin-bottom: 1rem;
+        }
+
+        html.dark .featured-category {
+            color: #666;
+        }
+
+        .featured-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            letter-spacing: -0.3px;
+        }
+
+        .featured-description {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: auto;
+            margin-top: 0.5rem;
+        }
+
+        html.dark .featured-description {
+            color: #aaa;
+        }
+
+        .featured-date {
+            font-size: 0.85rem;
+            color: #999;
+            margin-top: 1.5rem;
+        }
+
+        html.dark .featured-date {
+            color: #777;
+        }
+
+        /* SECTION HEADER */
+        .section-header {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            margin-top: 3.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-light);
+            letter-spacing: -0.3px;
+        }
+
+        html.dark .section-header {
+            border-bottom-color: var(--border-dark);
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .article-card {
+            background: var(--bg-light);
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 0;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .article-card:hover {
+            border-color: #d0d0d0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            transform: translateY(-6px);
+        }
+
+        html.dark .article-card {
+            background: var(--bg-dark);
+            border-color: #333;
+        }
+
+        html.dark .article-card:hover {
+            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.15);
+            border-color: #444;
+        }
+
+        .article-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 0;
+            margin-bottom: 0;
+        }
+
+        .article-category {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #999;
+            margin: 1.2rem 1.5rem 0.5rem 1.5rem;
+        }
+
+        html.dark .article-category {
+            color: #666;
+        }
+
+        .article-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0 1.5rem;
+            line-height: 1.4;
+            letter-spacing: -0.3px;
+        }
+
+        .article-description {
+            font-size: 0.95rem;
+            color: #666;
+            flex: 1;
+            line-height: 1.6;
+            margin: 0.8rem 1.5rem;
+        }
+
+        html.dark .article-description {
+            color: #aaa;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--bg-light);
+            border-top: 1px solid var(--border-light);
+            padding: 3rem 1.5rem;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 3rem;
+        }
+
+        html.dark footer {
+            background: var(--bg-dark);
+            border-color: var(--border-dark);
+            color: #999;
+        }
+
+        footer p {
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .logo-container {
+                flex: 1 1 auto;
+            }
+
+            .logo-img {
+                height: 36px;
+            }
+
+            .logo-text {
+                font-size: 1.2rem;
+            }
+
+            nav {
+                flex-basis: 100%;
+                gap: 1.5rem;
+                order: 3;
+                justify-content: center;
+            }
+
+            .header-controls {
+                flex-basis: 100%;
+                justify-content: center;
+                order: 2;
+            }
+
+            .intro-title {
+                font-size: 2rem;
+            }
+
+            .intro-subtitle {
+                font-size: 1rem;
+            }
+
+            .intro-button {
+                padding: 0.9rem 2rem;
+                font-size: 0.95rem;
+            }
+
+            main {
+                padding: 2rem 1rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .featured-article {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-image {
+                height: 240px;
+            }
+
+            .featured-content {
+                padding: 2rem;
+            }
+
+            .featured-title {
+                font-size: 1.5rem;
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .section-header {
+                font-size: 1.3rem;
+                margin-top: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text {
+                display: none;
+            }
+
+            nav {
+                gap: 1rem;
+            }
+
+            nav a {
+                font-size: 0.85rem;
+            }
+
+            .intro-content {
+                padding: 1.5rem;
+            }
+
+            .intro-title {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .intro-button {
+                padding: 0.8rem 1.5rem;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .featured-image {
+                height: 200px;
+            }
+
+            .featured-content {
+                padding: 1.5rem;
+            }
+
+            .featured-title {
+                font-size: 1.3rem;
+            }
+
+            .featured-category {
+                font-size: 0.7rem;
+            }
+
+            .section-header {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- INTRO MODAL -->
+    <div class="intro-modal" id="introModal">
+        <div class="intro-content">
+            <h1 class="intro-title" data-ar="Harage" data-en="Harage" data-fr="Harage">Harage</h1>
+            <p class="intro-subtitle" data-ar="منصة حارة للمقالات والمواضيع" data-en="Platform for articles and topics" data-fr="Plateforme d'articles et de sujets">منصة حارة للمقالات والمواضيع</p>
+            <p class="intro-partnership" data-ar="شراكة بين Leo MH × TA-Mohamed" data-en="Partnership between Leo MH × TA-Mohamed" data-fr="Partenariat entre Leo MH × TA-Mohamed">شراكة بين Leo MH × TA-Mohamed</p>
+            <button class="intro-button" onclick="closeIntro()" data-ar="الدخول للموقع" data-en="Enter Website" data-fr="Entrer sur le site">الدخول للموقع</button>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo-container">
+                <img src="logo.png" alt="Harage Logo" class="logo-img">
+                <span class="logo-text">Harage</span>
+            </a>
+            <nav id="navMenu">
+                <a href="index.html" data-ar="الرئيسية" data-en="Home" data-fr="Accueil">الرئيسية</a>
+                <a href="articles.html" data-ar="المقالات" data-en="Articles" data-fr="Articles">المقالات</a>
+                <a href="credits.html" data-ar="الفريق" data-en="Team" data-fr="Équipe">الفريق</a>
+            </nav>
+            <div class="header-controls">
+                <select id="langSelect" onchange="changeLanguage(this.value)">
+                    <option value="ar">عربي</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                </select>
+                <button onclick="toggleDarkMode()" title="البحث عن مظلم">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <h2 class="page-title" data-ar="أحدث المقالات والفرص" data-en="Latest Articles & Opportunities" data-fr="Derniers Articles et Opportunités">أحدث المقالات والفرص</h2>
+        
+        <!-- FEATURED ARTICLE -->
+        <div class="featured-section" id="featuredSection">
+            <!-- Featured article will be populated by JavaScript -->
+        </div>
+
+        <!-- RECENT ARTICLES -->
+        <h3 class="section-header" data-ar="مقالات مشهورة" data-en="Featured Articles" data-fr="Articles en vedette">مقالات مشهورة</h3>
+        <div class="articles-grid" id="articlesContainer">
+            <p data-ar="جاري التحميل..." data-en="Loading..." data-fr="Chargement...">جاري التحميل...</p>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p data-ar="&copy; 2026 Harage | شراكة بين Leo MH × TA-Mohamed" data-en="&copy; 2026 Harage | Partnership between Leo MH × TA-Mohamed" data-fr="&copy; 2026 Harage | Partenariat entre Leo MH × TA-Mohamed">&copy; 2026 Harage | شراكة بين Leo MH × TA-Mohamed</p>
+    </footer>
+
+    <!-- Firebase Configuration (Shared) -->
+    <script src="js/firebase-config.js"></script>
+
+    <script src="js/data.js" type="module"></script>
+    <script>
+        // DARK MODE
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('harage_dark_mode', isDark);
+            updateDarkModeButton();
+        }
+
+        function updateDarkModeButton() {
+            const btn = document.querySelector('[title*="مظ"]');
+            const isDark = document.documentElement.classList.contains('dark');
+            btn.textContent = isDark ? '☀️' : '🌙';
+        }
+
+        // Initialize dark mode
+        function initDarkMode() {
+            const isDark = localStorage.getItem('harage_dark_mode') === 'true';
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+            }
+            updateDarkModeButton();
+        }
+
+        // INTRO MODAL
+        function showIntro() {
+            const modal = document.getElementById('introModal');
+            modal.classList.remove('hidden');
+            
+            // Auto-hide after 7 seconds
+            setTimeout(closeIntro, 7000);
+        }
+
+        function closeIntro() {
+            const modal = document.getElementById('introModal');
+            modal.classList.add('hidden');
+        }
+
+        function hideIntro() {
+            document.getElementById('introModal').classList.add('hidden');
+        }
+
+        // LANGUAGE
+        function changeLanguage(lang) {
+            localStorage.setItem('harage_language', lang);
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            
+            // Update all elements with data-* attributes
+            document.querySelectorAll('[data-ar][data-en][data-fr]').forEach(element => {
+                const text = element.getAttribute(`data-${lang}`);
+                if (text && element.tagName !== 'IMG') {
+                    if (text.includes('©')) {
+                        // For footer with HTML entities
+                        element.innerHTML = text;
+                    } else {
+                        element.textContent = text;
+                    }
+                }
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initDarkMode();
+            showIntro();
+            
+            // Load saved language
+            const lang = localStorage.getItem('harage_language') || 'ar';
+            document.getElementById('langSelect').value = lang;
+            changeLanguage(lang);
+        });
+    </script>
+
+    <script src="js/data.js"></script>
+    <script>
+        // Load articles from Firebase with fallback for offline/file:// mode
+        async function displayArticles() {
+            const container = document.getElementById('articlesContainer');
+            const featuredSection = document.getElementById('featuredSection');
+            
+            try {
+                // If Firebase is available globally
+                if (typeof window.getAllArticles === 'function') {
+                    const articles = await window.getAllArticles();
+                    
+                    if (articles.length === 0) {
+                        container.innerHTML = '<p data-ar="لا توجد مقالات حالياً" data-en="No articles yet" data-fr="Aucun article pour le moment">لا توجد مقالات حالياً</p>';
+                        featuredSection.innerHTML = '';
+                        return;
+                    }
+
+                    // Display featured article
+                    const featured = articles[0];
+                    featuredSection.innerHTML = `
+                        <a href="article-detail.html?id=${featured.id}" class="featured-article">
+                            ${featured.imageUrl ? `<img src="${featured.imageUrl}" alt="" class="featured-image" onerror="this.style.display='none'">` : '<div class="featured-image" style="background:#e5e5e5;"></div>'}
+                            <div class="featured-content">
+                                <span class="featured-category">${featured.category || 'مقالة'}</span>
+                                <h2 class="featured-title">${featured.title}</h2>
+                                <p class="featured-description">${featured.description}</p>
+                                <p class="featured-date">${featured.createdAt ? new Date(featured.createdAt).toLocaleDateString('ar-SA') : ''}</p>
+                            </div>
+                        </a>
+                    `;
+
+                    // Display remaining articles
+                    const remaining = articles.slice(1, 7);
+                    
+                    container.innerHTML = remaining.map(article => `
+                        <a href="article-detail.html?id=${article.id}" class="article-card">
+                            ${article.imageUrl ? `<img src="${article.imageUrl}" alt="" class="article-image" onerror="this.style.display='none'">` : ''}
+                            <span class="article-category">${article.category || 'مقالة'}</span>
+                            <h3 class="article-title">${article.title}</h3>
+                            <p class="article-description">${article.description}</p>
+                        </a>
+                    `).join('');
+                } else {
+                    throw new Error('Firebase not loaded');
+                }
+            } catch (error) {
+                // Fallback for offline mode
+                console.log('Offline mode: showing placeholder');
+                
+                featuredSection.innerHTML = `
+                    <a href="#" class="featured-article" style="pointer-events:none;">
+                        <div class="featured-image" style="background:#e5e5e5;"></div>
+                        <div class="featured-content">
+                            <span class="featured-category">مثال</span>
+                            <h2 class="featured-title">أهلاً بك في حارة</h2>
+                            <p class="featured-description">لعرض المقالات، تأكد من اتصالك بـ HTTP server أو افتح الصفحة من http://localhost:3000</p>
+                            <p class="featured-date">مقالات محفوظة في Firebase</p>
+                        </div>
+                    </a>
+                `;
+                
+                container.innerHTML = `
+                    <div class="article-card">
+                        <span class="article-category">معلومة</span>
+                        <h3 class="article-title">نسخة محلية</h3>
+                        <p class="article-description">أنت تشغل النسخة المحلية من الموقع. المقالات محفوظة في قاعدة بيانات Firebase</p>
+                    </div>
+                    <div class="article-card">
+                        <span class="article-category">تطوير</span>
+                        <h3 class="article-title">الخطوة التالية</h3>
+                        <p class="article-description">شغل خادم محلي بـ: npx http-server -p 3000 ثم افتح http://localhost:3000</p>
+                    </div>
+                    <div class="article-card">
+                        <span class="article-category">إعدادات</span>
+                        <h3 class="article-title">Firebase Configuration</h3>
+                        <p class="article-description">تحقق من اتصالك بـ Firebase في js/data.js وتأكد من صحة المفاتيح</p>
+                    </div>
+                `;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', displayArticles);
+    </script>
+</body>
+</html>
+
+

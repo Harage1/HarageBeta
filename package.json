@@ -1,0 +1,19 @@
+{
+  "name": "harage",
+  "version": "1.0.0",
+  "description": "Professional blog platform with Firebase backend, multi-language support, and dark mode",
+  "author": "LB4 Company",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "http-server -p 3000 --cors",
+    "dev": "http-server -p 3000 --cors -c-1",
+    "install-server": "npm install -g http-server"
+  },
+  "dependencies": {
+    "firebase": "^10.7.0"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

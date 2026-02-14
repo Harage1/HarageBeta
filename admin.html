@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - Harage</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="shortcut icon" href="logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-light: #ffffff;
+            --bg-dark: #000000;
+            --text-light: #000000;
+            --text-dark: #ffffff;
+            --border-light: #e5e5e5;
+            --border-dark: #333333;
+            --hover-light: #f5f5f5;
+            --hover-dark: #1a1a1a;
+        }
+
+        html.dark {
+            --bg-light: #000000;
+            --bg-dark: #000000;
+            --text-light: #ffffff;
+            --text-dark: #ffffff;
+            --border-light: #333333;
+            --border-dark: #555555;
+            --hover-light: #1a1a1a;
+            --hover-dark: #2a2a2a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-light);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* HEADER */
+        header {
+            background: var(--bg-light);
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            transition: all 0.3s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.02);
+        }
+
+        .logo-img {
+            height: 44px;
+            width: auto;
+            border-radius: 6px;
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-light);
+            letter-spacing: -0.5px;
+        }
+
+        .logo {
+            display: block;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        button {
+            padding: 0.5rem 0.8rem;
+            border: 1px solid var(--border-light);
+            background: var(--bg-light);
+            color: var(--text-light);
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        button:hover {
+            background: var(--hover-light);
+            border-color: #d0d0d0;
+        }
+
+        button:focus {
+            outline: none;
+            border-color: var(--text-light);
+            background: var(--hover-light);
+        }
+
+        /* MAIN CONTENT */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            min-height: calc(100vh - 150px);
+        }
+
+        .page-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 3.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        /* SECTION HEADERS */
+        .section-header {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            margin-top: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-light);
+            letter-spacing: -0.3px;
+        }
+
+        html.dark .section-header {
+            border-bottom-color: var(--border-dark);
+        }
+
+        .admin-section {
+            background: var(--bg-light);
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            letter-spacing: -0.3px;
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            font-size: 0.95rem;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 1px solid #e5e5e5;
+            background: var(--bg-light);
+            color: var(--text-light);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            resize: vertical;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--text-light);
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-primary {
+            background: var(--text-light);
+            color: var(--bg-light);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.3px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-1px);
+        }
+
+        .articles-list {
+            display: grid;
+            gap: 1.8rem;
+        }
+
+        .article-item {
+            background: var(--hover-light);
+            border: 1px solid #e5e5e5;
+            padding: 2rem;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .article-item:hover {
+            border-color: #d0d0d0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            transform: translateY(-2px);
+        }
+
+        .article-item-title {
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .article-item-meta {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 1.2rem;
+        }
+
+        html.dark .article-item-meta {
+            color: #aaa;
+        }
+
+        .article-item-actions {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--bg-light);
+            border-top: 1px solid var(--border-light);
+            padding: 3rem 1.5rem;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 3rem;
+        }
+
+        html.dark footer {
+            background: var(--bg-dark);
+            border-color: var(--border-dark);
+            color: #999;
+        }
+
+        footer p {
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .logo-container {
+                flex: 1 1 auto;
+            }
+
+            .logo-img {
+                height: 36px;
+            }
+
+            .logo-text {
+                font-size: 1.2rem;
+            }
+
+            .header-controls {
+                flex-basis: 100%;
+                justify-content: flex-end;
+            }
+
+            main {
+                padding: 2rem 1rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+                margin-bottom: 2.5rem;
+            }
+
+            .section-header,
+            .section-title {
+                font-size: 1.3rem;
+            }
+
+            .admin-section {
+                padding: 1.5rem;
+            }
+
+            .article-item-actions {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-danger {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text {
+                display: none;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .section-header,
+            .section-title {
+                font-size: 1.1rem;
+            }
+
+            input, textarea, select {
+                padding: 0.8rem;
+            }
+
+            .btn-primary {
+                padding: 0.9rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Harage Logo" class="logo-img">
+                <span data-ar="Harage - لوحة التحكم" data-en="Harage - Admin Panel" data-fr="Harage - Panneau d'administration">Harage - لوحة التحكم</span>
+            </a>
+            <div class="header-controls">
+                <button onclick="toggleDarkMode()">🌙</button>
+                <button onclick="logoutSafe()" style="background: rgba(255, 0, 0, 0.2); color: white;" data-ar="تسجيل الخروج" data-en="Logout" data-fr="Déconnexion">تسجيل الخروج</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main id="mainContent">
+        <h2 class="page-title">جاري التحميل...</h2>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Harage | شراكة بين Leo MH × TA-Mohamed</p>
+    </footer>
+
+    <!-- Firebase Configuration (Shared) -->
+    <script src="js/firebase-config.js"></script>
+
+    <script src="js/admin.js"></script>
+    <script>
+        // DARK MODE
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('harage_dark_mode', isDark);
+            updateDarkModeButton();
+        }
+
+        function updateDarkModeButton() {
+            const btn = document.querySelector('button[onclick*="toggleDark"]');
+            const isDark = document.documentElement.classList.contains('dark');
+            btn.textContent = isDark ? '☀️' : '🌙';
+        }
+
+        // Initialize dark mode
+        function initDarkMode() {
+            const isDark = localStorage.getItem('harage_dark_mode') === 'true';
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+            }
+            updateDarkModeButton();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initDarkMode();
+            // Initialize Firebase from admin.js
+            if (typeof window.initFirebase === 'function') {
+                window.initFirebase();
+            }
+        });
+
+        // Wrapper safe للـ logout function
+        function logoutSafe() {
+            if (typeof window.logout === 'function') {
+                window.logout();
+            } else {
+                console.error('logout function not loaded yet');
+                alert('جاري تحميل الصفحة... حاول مرة أخرى');
+            }
+        }
+    </script>
+</body>
+</html>
+
