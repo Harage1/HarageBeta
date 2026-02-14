@@ -773,36 +773,35 @@
                     throw new Error('Firebase not loaded');
                 }
             } catch (error) {
-                // Fallback for offline mode
-                console.log('Offline mode: showing placeholder');
+                // Error: show diagnostic information
+                console.error('🚨 Error loading articles:', error);
                 
                 featuredSection.innerHTML = `
-                    <a href="#" class="featured-article" style="pointer-events:none;">
-                        <div class="featured-image" style="background:#e5e5e5;"></div>
-                        <div class="featured-content">
-                            <span class="featured-category">مثال</span>
-                            <h2 class="featured-title">أهلاً بك في حارة</h2>
-                            <p class="featured-description">لعرض المقالات، تأكد من اتصالك بـ HTTP server أو افتح الصفحة من http://localhost:3000</p>
-                            <p class="featured-date">مقالات محفوظة في Firebase</p>
+                    <div class="featured-article" style="pointer-events: none; opacity: 0.6;">
+                        <div class="featured-image" style="background: linear-gradient(135deg, #e5e5e5 0%, #f0f0f0 100%); display: flex; align-items: center; justify-content: center; color: #999; font-size: 14px;">
+                            فحص الاتصال بـ Firebase
                         </div>
-                    </a>
+                        <div class="featured-content">
+                            <span class="featured-category">تشخيص</span>
+                            <h2 class="featured-title">جاري تحميل المقالات</h2>
+                            <p class="featured-description">افتح Developer Console (F12) لرؤية تفاصيل الاتصال بـ Firebase والأخطاء المحتملة</p>
+                            <p class="featured-date">تحقق من: اتصالك بالإنترنت - Firebase Security Rules - API يكيفيات</p>
+                        </div>
+                    </div>
                 `;
                 
                 container.innerHTML = `
-                    <div class="article-card">
-                        <span class="article-category">معلومة</span>
-                        <h3 class="article-title">نسخة محلية</h3>
-                        <p class="article-description">أنت تشغل النسخة المحلية من الموقع. المقالات محفوظة في قاعدة بيانات Firebase</p>
-                    </div>
-                    <div class="article-card">
-                        <span class="article-category">تطوير</span>
-                        <h3 class="article-title">الخطوة التالية</h3>
-                        <p class="article-description">شغل خادم محلي بـ: npx http-server -p 3000 ثم افتح http://localhost:3000</p>
-                    </div>
-                    <div class="article-card">
-                        <span class="article-category">إعدادات</span>
-                        <h3 class="article-title">Firebase Configuration</h3>
-                        <p class="article-description">تحقق من اتصالك بـ Firebase في js/data.js وتأكد من صحة المفاتيح</p>
+                    <div style="grid-column: 1/-1; padding: 2rem; text-align: center; background: var(--hover-light); border-radius: 12px;">
+                        <p style="font-weight: 600; margin-bottom: 1rem;">⚠️ لم يتم تحميل المقالات</p>
+                        <p style="font-size: 0.9rem; color: var(--text-light);">
+                            السبب المحتمل:
+                        </p>
+                        <ul style="list-style: none; padding: 1rem 0; font-size: 0.9rem; text-align: right;">
+                            <li>✓ تحقق من اتصال Wi-Fi/الإنترنت</li>
+                            <li>✓ افتح صفحة Firebase: <a href="https://console.firebase.google.com/u/0/project/harage-c5dd1/firestore" target="_blank" style="color: inherit; text-decoration: underline;">Firebase Console</a></li>
+                            <li>✓ اضغط F12 وتفقد Console للأخطاء</li>
+                            <li>✓ تأكد من وجود مقالات في Firestore (مقدرة "articles")</li>
+                        </ul>
                     </div>
                 `;
             }

@@ -514,14 +514,20 @@
                 buildCategoryFilters();
                 filterByCategory('الكل');
             } catch (error) {
-                console.log('Offline mode: loading placeholder articles');
-                // Show fallback message
+                console.error('❌ Error loading articles:', error);
+                // Show diagnostic message
                 document.getElementById('articlesContainer').innerHTML = `
-                    <p style="padding: 2rem; text-align: center; color: #666;">
-                        لعرض المقالات، تأكد من اتصالك بـ HTTP server.<br>
-                        شغل: npx http-server -p 3000<br>
-                        ثم افتح: http://localhost:3000
-                    </p>
+                    <div style="grid-column: 1/-1; padding: 2rem; text-align: center; background: var(--hover-light); border-radius: 12px;">
+                        <p style="font-weight: 600; margin-bottom: 1rem;">⚠️ لم يتم تحميل المقالات</p>
+                        <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 1rem;">
+                            افتح Developer Console (F12) لرؤية تفاصيل الخطأ
+                        </p>
+                        <ul style="list-style: none; padding: 1rem 0; font-size: 0.9rem; text-align: right;">
+                            <li>✓ تحقق من اتصال Wi-Fi/الإنترنت</li>
+                            <li>✓ افتح Firebase Console: <a href="https://console.firebase.google.com/u/0/project/harage-c5dd1/firestore" target="_blank" style="color: inherit; text-decoration: underline;">اضغط هنا</a></li>
+                            <li>✓ تأكد من وجود مقالات في Firestore</li>
+                        </ul>
+                    </div>
                 `;
                 document.getElementById('categoryFilters').innerHTML = '';
             }

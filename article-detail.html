@@ -544,10 +544,20 @@
 
                 document.getElementById('articleContainer').innerHTML = html;
             } catch (error) {
-                console.log('Offline mode or Firebase error');
+                console.error('❌ Error loading article:', error);
                 document.getElementById('articleContainer').innerHTML = `
-                    <p>لعرض هذا المقال، تأكد من اتصالك بـ HTTP server أو Firebase</p>
-                    <a href="articles.html" class="back-button">العودة للمقالات</a>
+                    <div style="padding: 2rem; text-align: center; background: var(--hover-light); border-radius: 12px;">
+                        <p style="font-weight: 600; margin-bottom: 1rem;">⚠️ لم يتم تحميل المقال</p>
+                        <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 1rem;">
+                            قد لا يكون المقال موجود أو حدث خطأ في الاتصال
+                        </p>
+                        <ul style="list-style: none; padding: 1rem 0; font-size: 0.9rem; text-align: right;">
+                            <li>✓ تحقق من الرابط</li>
+                            <li>✓ تأكد من اتصالك بالإنترنت</li>
+                            <li>✓ افتح F12 لرؤية تفاصيل الخطأ</li>
+                        </ul>
+                        <a href="articles.html" class="back-button" style="display: inline-block; margin-top: 1rem;">العودة للمقالات</a>
+                    </div>
                 `;
             }
         }
